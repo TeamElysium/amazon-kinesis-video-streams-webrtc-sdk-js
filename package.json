@@ -54,9 +54,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@types/ws": "^7.4.5",
     "isomorphic-webcrypto": "^2.3.6",
-    "tslib": "^1.10.0",
-    "ws": "^7.5.1"
+    "tslib": "^1.10.0"
   }
 }
