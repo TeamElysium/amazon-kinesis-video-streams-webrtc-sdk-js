@@ -266,14 +266,14 @@ export class SignalingClient extends EventEmitter {
      * Takes the given base64 encoded string and decodes it into a JSON object.
      */
     private static parseJSONObjectFromBase64String(base64EncodedString: string): object {
-        return JSON.parse(atob(base64EncodedString));
+        return JSON.parse(Buffer.from(base64EncodedString, 'base64').toString('utf-8'));
     }
 
     /**
      * Takes the given JSON object and encodes it into a base64 string.
      */
     private static serializeJSONObjectAsBase64String(object: object): string {
-        return btoa(JSON.stringify(object));
+        return Buffer.from(JSON.stringify(object)).toString('base64');
     }
 
     /**
