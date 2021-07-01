@@ -16,7 +16,7 @@
     "NOTICE.txt"
   ],
   "scripts": {
-    "prepare": "npm run build-commonjs",
+    "postinstall": "npm run build-commonjs",
     "integ-server": "ws -p 3000",
     "test": "jest --runInBand",
     "test-watch": "jest --watch",
