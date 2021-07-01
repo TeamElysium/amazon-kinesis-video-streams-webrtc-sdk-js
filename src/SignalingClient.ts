@@ -1,3 +1,5 @@
+import WebSocket from 'ws';
+
 import { EventEmitter } from 'events';
 
 import { QueryParams } from './QueryParams';
@@ -235,11 +237,11 @@ export class SignalingClient extends EventEmitter {
     /**
      * WebSocket 'message' event handler. Attempts to parse the message and handle it according to the message type.
      */
-    private onMessage(event: MessageEvent): void {
+    private onMessage({ data }: any): void {
         let parsedEventData: WebSocketMessage;
         let parsedMessagePayload: object;
         try {
-            parsedEventData = JSON.parse(event.data) as WebSocketMessage;
+            parsedEventData = JSON.parse(data) as WebSocketMessage;
             parsedMessagePayload = SignalingClient.parseJSONObjectFromBase64String(parsedEventData.messagePayload);
         } catch (e) {
             // For forwards compatibility we ignore messages that are not able to be parsed.
@@ -322,7 +324,7 @@ export class SignalingClient extends EventEmitter {
     /**
      * 'error' event handler. Forwards the error onto listeners.
      */
-    private onError(error: Error | Event): void {
+    private onError({ error }: any): void {
         this.emit('error', error);
     }
 
