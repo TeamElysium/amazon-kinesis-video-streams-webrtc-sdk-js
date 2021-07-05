@@ -168,7 +168,9 @@ export class SignalingClient extends EventEmitter {
      * @param {string} [recipientClientId] - ID of the client to send the message to. Required for 'MASTER' role. Should not be present for 'VIEWER' role.
      */
     public sendSdpOffer(sdpOffer: RTCSessionDescription, recipientClientId?: string): void {
-        this.sendMessage(MessageType.SDP_OFFER, sdpOffer.toJSON(), recipientClientId);
+        const sdp: RTCSessionDescriptionInit = { ...sdpOffer };
+
+        this.sendMessage(MessageType.SDP_OFFER, sdp, recipientClientId);
     }
 
     /**
@@ -179,7 +181,9 @@ export class SignalingClient extends EventEmitter {
      * @param {string} [recipientClientId] - ID of the client to send the message to. Required for 'MASTER' role. Should not be present for 'VIEWER' role.
      */
     public sendSdpAnswer(sdpAnswer: RTCSessionDescription, recipientClientId?: string): void {
-        this.sendMessage(MessageType.SDP_ANSWER, sdpAnswer.toJSON(), recipientClientId);
+        const sdp: RTCSessionDescriptionInit = { ...sdpAnswer };
+
+        this.sendMessage(MessageType.SDP_ANSWER, sdp, recipientClientId);
     }
 
     /**
@@ -190,7 +194,9 @@ export class SignalingClient extends EventEmitter {
      * @param {string} [recipientClientId] - ID of the client to send the message to. Required for 'MASTER' role. Should not be present for 'VIEWER' role.
      */
     public sendIceCandidate(iceCandidate: RTCIceCandidate, recipientClientId?: string): void {
-        this.sendMessage(MessageType.ICE_CANDIDATE, iceCandidate.toJSON(), recipientClientId);
+        const candidate: RTCIceCandidateInit = { ...iceCandidate };
+
+        this.sendMessage(MessageType.ICE_CANDIDATE, candidate, recipientClientId);
     }
 
     /**
