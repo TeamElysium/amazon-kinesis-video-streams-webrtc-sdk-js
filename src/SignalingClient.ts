@@ -1,5 +1,3 @@
-import WebSocket from 'ws';
-
 import { EventEmitter } from 'events';
 
 import { QueryParams } from './QueryParams';
@@ -7,7 +5,7 @@ import { RequestSigner } from './RequestSigner';
 import { Role } from './Role';
 import { SigV4RequestSigner } from './SigV4RequestSigner';
 import DateProvider from './internal/DateProvider';
-import { validateValueNil, validateValueNonNil } from './internal/utils';
+import { toJSONIceCandidate, validateValueNil, validateValueNonNil } from './internal/utils';
 
 /**
  * A partial copy of the credentials from the AWS SDK for JS: https://github.com/aws/aws-sdk-js/blob/master/lib/credentials.d.ts
@@ -168,9 +166,10 @@ export class SignalingClient extends EventEmitter {
      * @param {string} [recipientClientId] - ID of the client to send the message to. Required for 'MASTER' role. Should not be present for 'VIEWER' role.
      */
     public sendSdpOffer(sdpOffer: RTCSessionDescription, recipientClientId?: string): void {
-        const sdp: RTCSessionDescriptionInit = { ...sdpOffer };
+        const { sdp, type } = sdpOffer;
+        const init: RTCSessionDescriptionInit = { sdp, type };
 
-        this.sendMessage(MessageType.SDP_OFFER, sdp, recipientClientId);
+        this.sendMessage(MessageType.SDP_OFFER, init, recipientClientId);
     }
 
     /**
@@ -181,9 +180,10 @@ export class SignalingClient extends EventEmitter {
      * @param {string} [recipientClientId] - ID of the client to send the message to. Required for 'MASTER' role. Should not be present for 'VIEWER' role.
      */
     public sendSdpAnswer(sdpAnswer: RTCSessionDescription, recipientClientId?: string): void {
-        const sdp: RTCSessionDescriptionInit = { ...sdpAnswer };
+        const { sdp, type } = sdpAnswer;
+        const init: RTCSessionDescriptionInit = { sdp, type };
 
-        this.sendMessage(MessageType.SDP_ANSWER, sdp, recipientClientId);
+        this.sendMessage(MessageType.SDP_ANSWER, init, recipientClientId);
     }
 
     /**
@@ -194,9 +194,9 @@ export class SignalingClient extends EventEmitter {
      * @param {string} [recipientClientId] - ID of the client to send the message to. Required for 'MASTER' role. Should not be present for 'VIEWER' role.
      */
     public sendIceCandidate(iceCandidate: RTCIceCandidate, recipientClientId?: string): void {
-        const candidate: RTCIceCandidateInit = { ...iceCandidate };
+        const init: RTCIceCandidateInit = toJSONIceCandidate(iceCandidate);
 
-        this.sendMessage(MessageType.ICE_CANDIDATE, candidate, recipientClientId);
+        this.sendMessage(MessageType.ICE_CANDIDATE, init, recipientClientId);
     }
 
     /**

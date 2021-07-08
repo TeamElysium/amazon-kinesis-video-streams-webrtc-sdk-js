@@ -21,3 +21,37 @@ export function validateValueNil(value: any, valueName: string): void {
         throw new Error(`${valueName} should be null`);
     }
 }
+
+// Temporary functions; Returns its init, json format.
+
+export function toJSONSdp(desc: RTCSessionDescription) {
+    if (typeof desc.toJSON === 'function') {
+        return desc.toJSON();
+    }
+
+    const { sdp, type } = desc;
+
+    const init: RTCSessionDescriptionInit = {
+        sdp,
+        type,
+    };
+
+    return init;
+}
+
+export function toJSONIceCandidate(iceCandidate: RTCIceCandidate) {
+    if (typeof iceCandidate.toJSON === 'function') {
+        return iceCandidate.toJSON();
+    }
+
+    const { candidate, sdpMLineIndex, sdpMid, usernameFragment } = iceCandidate;
+
+    const init: RTCIceCandidateInit = {
+        candidate,
+        sdpMLineIndex,
+        sdpMid,
+        usernameFragment,
+    };
+
+    return init;
+}
