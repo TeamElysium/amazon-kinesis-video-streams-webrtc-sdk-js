@@ -13,10 +13,32 @@ This SDK is intended to be used along side the [AWS SDK for JS](https://github.c
 
 ## IMPORTANT NOTICE ❗
 
-This package is modified by @teamelysium due to original repo not supporting NodeJS completely.
+This package is modified by @teamelysium, due to the original repo not supporting NodeJS completely.
 
-Some components are changed, therefore this package is not working with browser environment.
-If you want to use KVS on the web, use original repo [here](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-js).
+## On Node Environment
+
+You **MUST** follow these instructions to use SDK on node.
+
+### Requirements
+
+To use websocket on node, you should use `'ws'`, which is a node wrapper for websocket.
+
+```bash
+yarn add ws
+yarn add -D @types/ws
+```
+
+### Usage
+
+Add these lines when you are to use SignalingClient.
+
+```typescript
+import NodeWebSocket from 'ws';
+
+global.WebSocket = NodeWebSocket as any;
+
+// ...
+```
 
 ## Installing
 
