@@ -1,6 +1,6 @@
 {
     "name": "@teamelysium/amazon-kvs",
-    "version": "0.1.0-alpha.4",
+    "version": "0.1.0-alpha.5",
     "description": "Amazon Kinesis Video Streams WebRTC SDK, edited by @teamelysium.",
     "repository": {
         "type": "git",
