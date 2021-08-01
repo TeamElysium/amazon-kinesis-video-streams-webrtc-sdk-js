@@ -9,6 +9,6 @@ export { Role } from './Role';
 export { SignalingClient } from './SignalingClient';
 export { SigV4RequestSigner } from './SigV4RequestSigner';
 export { QueryParams } from './QueryParams';
-export { RequestSigner } from './RequestSigner';
+export * from './RequestSigner';
 
 export const VERSION = process.env.PACKAGE_VERSION;
